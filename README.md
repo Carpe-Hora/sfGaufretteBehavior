@@ -61,6 +61,34 @@ Dependency
 To use this behavior you need :
 
 - [sfGaufrettePlugin](https://github.com/themouette/sfGaufrettePlugin)
-- sfContextBehavior
-- 
+- [sfContextBehavior](https://github.com/Carpe-Hora/sfContextBehavior)
+
+Installation
+------------
+
+Install the behavior in your vendor directory
+
+```
+git submodule add git://github.com/Carpe-Hora/sfGaufretteBehavior.git lib/vendor/sfGaufretteBehavior
+```
+
+add following to your ```propel.ini``` file:
+
+``` ini
+propel.behavior.sf_gaufrette.class               = lib.vendor.sfGaufretteBehavior.src.SfGaufretteBehavior
+```
+
+Declare behavior for a table in your ```config/schema.xml```
+
+``` xml
+<database name="propel" defaultIdMethod="native" package="lib.model">
+  <table name="my_table">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <behavior name="sf_gaufrette">
+      <parameter name="name" value="my_gaufrette_name" />
+    </behavior>
+  </table>
+</database>
+```
+
 
