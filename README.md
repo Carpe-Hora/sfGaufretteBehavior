@@ -15,6 +15,11 @@ Example :  author
     
     <behavior name="sf_gaufrette">
       <parameter name="name" value="avatar_gaufrette" />
+      <!-- 
+        We need to give an app to retrieve configuration when loading fixtures
+        Default is set to 'frontend'.
+      -->
+      <parameter name="cli_app" value="frontend" />
     </behavior>
   </table>
 
@@ -25,7 +30,6 @@ update your Active record class ass follow
 ```php
   public function getGaufrette($name = 'avatar_gaufrette')
   {
-  
     if (sfContext::hasInstance())
     {
       $sf_context = $this->getApplicationContext();
@@ -34,11 +38,12 @@ update your Active record class ass follow
     }
     else
     {
-      $sfDefineEnvironmentConfigHandler = new sfDefineEnvironmentConfigHandler();
-      $config = sfFactoryConfigHandler::getConfiguration(array(sfConfig::get('sf_app_config_dir').'/app.yml'));
-      sfConfig::add($config);
+      //only used when loading fixtures because we don't have any config... we need to get one.
+      //Any improvement is welcome!
+      $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', 'cli', false);
+      $configCache = new sfConfigCache($configuration);
   
-      $gaufretteFactory = new sfGaufretteFactory();
+      $gaufretteFactory = new sfGaufretteFactory($configCache);
       $gaufrette = $gaufretteFactory->get($name);
       
       return $gaufrette;
