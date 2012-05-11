@@ -48,11 +48,10 @@ public function getGaufrette(\$name = '{$this->getParameter('name')}')
   }
   else
   {
-    \$sfDefineEnvironmentConfigHandler = new sfDefineEnvironmentConfigHandler();
-    \$config = sfFactoryConfigHandler::getConfiguration(array(sfConfig::get('sf_app_config_dir').'/app.yml'));
-    sfConfig::add(\$config);
+    \$configuration = ProjectConfiguration::getApplicationConfiguration('{$this->getParameter('cli_app')}', 'cli', false);
+    \$configCache = new sfConfigCache(\$configuration);
 
-    \$gaufretteFactory = new sfGaufretteFactory();
+    \$gaufretteFactory = new sfGaufretteFactory(\$configCache);
     \$gaufrette = \$gaufretteFactory->get(\$name);
     return \$gaufrette;
   }

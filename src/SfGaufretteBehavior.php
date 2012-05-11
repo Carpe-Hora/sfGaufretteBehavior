@@ -19,6 +19,7 @@ class SfGaufretteBehavior extends Behavior
 
   protected $parameters = array(
     'name'   => null,
+    'cli_app'   => 'frontend',
   );
 
   protected $objectBuilderModifier;
